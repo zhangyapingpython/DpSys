@@ -3,10 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>hnu.mn</groupId>
-	<artifactId>DPsys003</artifactId>
+	<artifactId>DPsys006</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-
 
 	<properties>
 		<servlet-version>3.0.1</servlet-version>
@@ -61,8 +60,8 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectjweaver-version}</version>
 		</dependency>
-
 		<!-- mybatis -->
+
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -84,6 +83,7 @@
 		</dependency>
 
 		<!-- mysql 驱动类 -->
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -91,20 +91,21 @@
 		</dependency>
 
 		<!-- jackson -->
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-version}</version>
 		</dependency>
-
+		
 		<!-- apache 图片上传 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload-version}</version>
 		</dependency>
-	</dependencies>
 
+	</dependencies>
 
 	<build>
 		<resources>
@@ -129,17 +130,14 @@
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
+
 				<configuration>
 					<!-- 控制tomcat端口号 -->
 					<port>80</port>
 					<!-- 项目发布到tomcat后的名称 -->
 					<!-- / 相当于把项目发布名称为ROOT -->
 					<!-- /abc -->
-					<!-- 下面是发到服务器的配置 
-					<username>tomcat</username>
-					<password>tomcat</password>
-					<url>http://203.195.212.156:8080/manager/text</url>
-					--><path>/</path>
+					<path>/</path>
 				</configuration>
 			</plugin>
 		</plugins>

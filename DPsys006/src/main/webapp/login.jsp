@@ -4,6 +4,7 @@
 <html>
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -12,11 +13,11 @@
 			<table align="center" border="1">
 				<tr>
 					<td>用户名:</td>
-					<td><input type="text" name="userName"></td>
+					<td><input type="text" name="username"></td>
 				</tr>
 				<tr>
 					<td>密&nbsp;&nbsp;码:</td>
-					<td><input type="text" name="passWord"></td>
+					<td><input type="text" name="password"></td>
 				</tr>
 				<tr>
 					<td><input type="submit" value="登录" name="login"></td>
@@ -24,7 +25,7 @@
 				</tr>
 			</table>
 			<p align="center">
-				<a href="registered.jsp" color=blue>注册用户</a>
+				<a href="regist" color=blue>注册用户</a>
 			</p>
 		</form>
 
