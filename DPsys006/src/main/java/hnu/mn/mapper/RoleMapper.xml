@@ -9,7 +9,7 @@
 		select roleID from sys_user_role where userID=#{userID};
 	</select>
 	
-	<!--根据角色ID查找角色名 -->
+	<!--根据角色ID查找角色 -->
 	<select id="selByRoleID4RoleName" resultType="hnu.mn.pojo.Role">
 		select * from sys_role where roleID=#{roleID};
 	</select>

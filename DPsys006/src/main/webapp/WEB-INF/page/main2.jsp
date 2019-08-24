@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>主页面</title>
+<title>查询后页面</title>
 <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 </head>
 <body>
@@ -15,8 +15,8 @@
 <c:forEach items="${user.role.permission }" var="permission">
 			<dt>可查询表：&nbsp;&nbsp;   ${permission.dataName }表</dt>
 			<dd>可查询字段：&nbsp;&nbsp;  ${permission.dataCol }字段</dd>
-			<dd>剩余查询时间：&nbsp;&nbsp;  ${permission.queryTime }分钟</dd>
-			<dd>剩余可查询次数：&nbsp;&nbsp;  ${permission.queryNum }次</dd>
+			<dd>总查询时间：&nbsp;&nbsp;  ${permission.queryTime }分钟</dd>
+			<dd>总查询次数：&nbsp;&nbsp;  ${permission.queryNum }次</dd>
 			<br />
 			
 		</c:forEach>
@@ -33,7 +33,11 @@
 			<input type="submit" value="查询" /><br />
 			</form>
 
- 
+查询结果：平均值  ${serachAvg } 
+			计数和   ${searchCount } 
+			
+${dataName }表还可以查询 	${remainQueryNum }次，查询时间还剩${remainMin}分	${remainSecond}秒
+
 </body>
 
 </html>

@@ -13,7 +13,7 @@
 			<table align="center" border="1">
 				<tr>
 					<td>用户名:</td>
-					<td><input type="text" name="username"></td>
+					<td><input type="text" name="userAccount"></td>
 				</tr>
 				<tr>
 					<td>密&nbsp;&nbsp;码:</td>

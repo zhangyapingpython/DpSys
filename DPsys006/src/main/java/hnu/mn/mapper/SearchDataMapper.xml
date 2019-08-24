@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hnu.mn.mapper.SearchDataMapper">
+	<!--根据前台传递的dataName，dataCol，start，end进行数据库查询 -->
+	<!--计数查询  $表名 ，#会增加一个字符串""头-->
+	<select id="selCountByFormSearch" resultType="java.lang.String">
+		SELECT count(${dataCol}) from ${dataName} 
+		where
+		${dataCol} between #{start} and #{end};
+		
+	</select>
+	
+	<!--平均值查询 -->
+	<select id="selAvgByFormSearch" resultType="java.lang.String">
+		SELECT avg(${dataCol}) from ${dataName}	
+		where
+		${dataCol} between #{start} and #{end};
+		
+	</select>
+		
+	
+</mapper>

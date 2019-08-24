@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hnu.mn.mapper.LoginPermissionMapper">
+	<!--主要还是为了记录查询时间和查询次数 -->
+	<select id="selByLoginUser" resultType="hnu.mn.pojo.LoginUser">
+		SELECT * from login_user
+		WHERE
+		userID=#{userID} and dataName=#{dataName}
+	</select>
+
+	<insert id="insLoginUser">
+		insert into login_user
+		(userID,username,queryTime,firstTime,queryNum,dataName)
+		values(#{userID} , #{username}, #{queryTime}, #{firstTime},
+		#{queryNum}, #{dataName})
+	</insert>
+		
+	<!--查询次数减一 -->
+	<update id="updLoginUserQueryNum">
+		UPDATE login_user SET queryNum=#{queryNum} 
+		WHERE userID=#{userID} AND dataName=#{dataName}
+	</update>
+</mapper>

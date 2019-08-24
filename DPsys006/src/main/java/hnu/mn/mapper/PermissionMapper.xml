@@ -6,7 +6,7 @@
 	<!--根据角色ID直接查找权限 -->
 	<select id="selByRoleId4Permisson" resultType="hnu.mn.pojo.Permission">
 		SELECT * from sys_permission WHERE
-		id in (SELECT permissionID FROM sys_role_permission WHERE
+		permissionID in (SELECT permissionID FROM sys_role_permission WHERE
 		roleID=#{roleID});
 	</select>
 </mapper>

@@ -7,20 +7,24 @@ public class User {
 	private String password;
 	private String telphone;
 	private String email;
+	// 1代表锁定
 	private char locked;
+	// 用户拥有的角色，默认一个
+	private Role role;
 
 	@Override
 	public String toString() {
-		return "User [id=" + userID + ", userAccount=" + userAccount + ", username=" + username + ", password=" + password
-				+ ", telphone=" + telphone + ", email=" + email + ", locked=" + locked + "]";
+		return "User [userID=" + userID + ", userAccount=" + userAccount + ", username=" + username + ", password="
+				+ password + ", telphone=" + telphone + ", email=" + email + ", locked=" + locked + ", role=" + role
+				+ "]";
 	}
 
-	public int getId() {
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setId(int id) {
-		this.userID = id;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 
 	public String getUserAccount() {
@@ -69,6 +73,14 @@ public class User {
 
 	public void setLocked(char locked) {
 		this.locked = locked;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }
