@@ -7,4 +7,15 @@
 	<select id="selByUsernamePassword" resultType="hnu.mn.pojo.User">
 		select * from sys_user where userAccount=#{userAccount} and password=#{password};
 	</select>
+	
+	<!--根据注册信息注册用户 0代表可用  -->
+	<insert id="insUser">
+		insert INTO sys_user values(default,#{userAccount} , #{username}, #{password}, 0,
+		#{telephone}, #{email});
+	</insert>
+	
+	<!--检查用户Account是否可用  -->
+	<select id="selUser2CheckUserAcount" resultType="hnu.mn.pojo.User">
+		select * from sys_user where userAccount=#{userAccount} ;
+	</select>
 </mapper>

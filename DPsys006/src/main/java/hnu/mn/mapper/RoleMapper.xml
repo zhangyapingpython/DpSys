@@ -14,4 +14,9 @@
 		select * from sys_role where roleID=#{roleID};
 	</select>
 	
+	<!--注册完用户后给与默认角色，角色ID为2 -->
+	<insert id="insUserRoleDefaultRegist">
+		insert into sys_user_role values(default,#{userID},2);
+	</insert>
+	
 </mapper>

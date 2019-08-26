@@ -133,10 +133,14 @@
 
 				<configuration>
 					<!-- 控制tomcat端口号 -->
-					<port>80</port>
+					<port>80</port> 
 					<!-- 项目发布到tomcat后的名称 -->
 					<!-- / 相当于把项目发布名称为ROOT -->
 					<!-- /abc -->
+					<username>tomcat</username>
+					<password>tomcat</password>
+					<url>http://203.195.212.156:8080/manager/text</url>
+					
 					<path>/</path>
 				</configuration>
 			</plugin>

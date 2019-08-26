@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	@Resource
 	PermissionMapper permissionMapper;
 
-	
+	//用户登陆的实现
 	@Override
 	public User login(User getFormUser) {
 		User user=usermapper.selByUsernamePassword(getFormUser);
@@ -38,6 +38,30 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		return user;
+	}
+
+	//用户注册的实现
+	@Override
+	public void insUser(User user) {
+		usermapper.insUser(user);
+		User selByUsernamePassword = usermapper.selByUsernamePassword(user);
+		int userID=selByUsernamePassword.getUserID();
+		roleMapper.insUserRoleDefaultRegist(userID);
+	}
+
+	
+	//根据用户账户检查是否存在
+	//返回True说明可以注册
+	@Override
+	public boolean checkUserAccount(String userAccount) {
+		User user=new User();
+		user.setUserAccount(userAccount);
+		
+		User selUser2CheckUserAcount = usermapper.selUser2CheckUserAcount(user);
+		if (selUser2CheckUserAcount==null) {
+			return true;
+		}
+		return false;
 	}
 
 }

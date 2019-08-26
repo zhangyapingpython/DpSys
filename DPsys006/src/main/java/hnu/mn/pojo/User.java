@@ -5,7 +5,7 @@ public class User {
 	private String userAccount;
 	private String username;
 	private String password;
-	private String telphone;
+	private String telephone;
 	private String email;
 	// 1代表锁定
 	private char locked;
@@ -15,7 +15,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userID=" + userID + ", userAccount=" + userAccount + ", username=" + username + ", password="
-				+ password + ", telphone=" + telphone + ", email=" + email + ", locked=" + locked + ", role=" + role
+				+ password + ", telephone=" + telephone + ", email=" + email + ", locked=" + locked + ", role=" + role
 				+ "]";
 	}
 
@@ -51,12 +51,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getTelphone() {
-		return telphone;
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setTelphone(String telphone) {
-		this.telphone = telphone;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getEmail() {

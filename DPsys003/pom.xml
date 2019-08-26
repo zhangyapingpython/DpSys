@@ -135,11 +135,11 @@
 					<!-- 项目发布到tomcat后的名称 -->
 					<!-- / 相当于把项目发布名称为ROOT -->
 					<!-- /abc -->
-					<!-- 下面是发到服务器的配置 
+					<!-- 下面是发到服务器的配置 -->
 					<username>tomcat</username>
 					<password>tomcat</password>
 					<url>http://203.195.212.156:8080/manager/text</url>
-					--><path>/</path>
+					<path>/dd</path>
 				</configuration>
 			</plugin>
 		</plugins>
