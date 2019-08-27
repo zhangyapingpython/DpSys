@@ -8,6 +8,8 @@
 		select * from sys_user where userAccount=#{userAccount} and password=#{password};
 	</select>
 	
+
+	
 	<!--根据注册信息注册用户 0代表可用  -->
 	<insert id="insUser">
 		insert INTO sys_user values(default,#{userAccount} , #{username}, #{password}, 0,

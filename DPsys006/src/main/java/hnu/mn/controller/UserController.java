@@ -21,6 +21,7 @@ import hnu.mn.pojo.DataInfo;
 import hnu.mn.pojo.DataReturnToForm;
 import hnu.mn.pojo.LoginUser;
 import hnu.mn.pojo.Permission;
+import hnu.mn.pojo.Role;
 import hnu.mn.pojo.User;
 import hnu.mn.service.ManageService;
 import hnu.mn.service.PermissionService;
@@ -46,6 +47,37 @@ public class UserController {
 	public String main(@PathVariable String page) {
 		System.out.println("restful");
 		return page;
+	}
+	
+	@RequestMapping("managePermisson")
+	public String managePermisson(int userID,HttpSession session) {
+		//获取到要修改的userID，接下来一样。获取它的全部权限，
+		//再然后修改它的权限 
+		System.out.println("userID   "+userID);
+		session.setAttribute("modifyUserID", userID);
+		User modifyUser = userServiceImpl.managePermisson(userID);
+		System.out.println("要修改的"+modifyUser);
+		session.setAttribute("modifyUser", modifyUser);
+		List<Role> allRoleAndPermissions = manageServiceImpl.allRoleAndPermissions();
+		System.out.println(allRoleAndPermissions);
+		session.setAttribute("allRoleAndPermissions", allRoleAndPermissions);
+		return "modify";
+	}
+	
+	@RequestMapping("modifyPermission")
+	public String modifyPermission(int roleID,HttpSession session) {
+		//获取到要修改的userID，接下来一样。获取它的全部权限，
+		//再然后修改它的权限 
+		int userID=(int) session.getAttribute("modifyUserID");
+		System.out.println("要修改cheng角色  "+roleID+"  原来的UserID  "+userID);
+		System.out.println("修改后    "+manageServiceImpl.updUser4Role(roleID, userID));
+		//获取到的所有用户信息，在这里可能有BUG
+		List<User> usersInfo = manageServiceImpl.usersInfo();
+		//System.out.println("获取到的所有用户信息"+userAccount);
+		session.setAttribute("usersInfo", usersInfo);
+		System.out.println("原来的数据"+session.getAttribute("user"));
+		System.out.println("存入的数据usersInfo " + usersInfo);// 
+		return "manage";
 	}
 	
 

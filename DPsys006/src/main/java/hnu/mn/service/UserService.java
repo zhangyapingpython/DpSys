@@ -11,4 +11,7 @@ public interface UserService {
 	
 	//注册时用户账户是否已存在
 	boolean checkUserAccount(String  userAccount);
+	
+	//修改权限
+	public User managePermisson(int userID);
 }

@@ -64,6 +64,11 @@
 	$(document).ready(function() {
 		
 	});
+	function show(e) {
+		var toMod=$(e).attr("custom")
+		alert("哈哈哈"+$(e).attr("custom"))
+		window.location.href="managePermisson?userID="+toMod
+	}
 
 </script>	
 </head>
@@ -93,16 +98,11 @@
 								<dd>可查询时间：&nbsp;&nbsp; ${permission.queryTime }分钟</dd>
 								<dd>可查询次数：&nbsp;&nbsp; ${permission.queryNum }次</dd>
 							</c:forEach></td>
-						
+						<td><button id="${user.userAccount}" custom="${user.userID}" onclick="show(this);">修改</button></td>
 					</tr>
 				</c:forEach>
 			</table>
-			<a
-				href="page?pageNumber=${PageInfo.pageNumber-1 }&pageSize=${PageInfo.pageSize}"
-				<c:if test="${PageInfo.pageNumber<=1 }">  onclick="javascript:return false;" </c:if>>上一页</a>
-			<a
-				href="page?pageNumber=${PageInfo.pageNumber+1 }&pageSize=${PageInfo.pageSize}"
-				<c:if test="${PageInfo.pageNumber>=PageInfo.total }">  onclick="javascript:return false;" </c:if>>下一页</a>
+			
 		</div>
 
 

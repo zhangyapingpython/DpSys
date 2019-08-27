@@ -19,4 +19,13 @@
 		insert into sys_user_role values(default,#{userID},2);
 	</insert>
 	
+	
+	<!--管理员根据userID修改用户角色 -->
+	<update id="updModifyUserRole">
+		UPDATE sys_user_role SET roleID=#{roleID} 
+		WHERE userID=#{userID} 
+	</update>
+	
+	
+	
 </mapper>

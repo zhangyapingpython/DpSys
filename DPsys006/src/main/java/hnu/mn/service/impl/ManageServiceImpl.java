@@ -26,7 +26,7 @@ public class ManageServiceImpl  implements ManageService{
 	PermissionMapper permissionMapper;
 
 	
-	
+	//显示所有用户信息
 	@Override
 	public List<User> usersInfo() {
 		List<User> users=new ArrayList<User>();
@@ -53,8 +53,28 @@ public class ManageServiceImpl  implements ManageService{
 			user.setRole(role);
 			users.add(user);
 		}		
-		//System.out.println("serzhong    "+users);
+		
 		return users;
+	}
+
+//显示所有角色信息
+	@Override
+	public List<Role> allRoleAndPermissions() {
+		//查role
+		List<Role> roles = roleMapper.selAllRoles();
+		for (Role role : roles) {
+			int roleID=role.getRoleID();
+			//根据RoleID去查权限
+			List<Permission> permission = permissionMapper.selByRoleId4Permisson(roleID);
+			role.setPermission(permission);
+		}
+		// TODO Auto-generated method stub
+		return roles;
+	}
+
+	@Override
+	public int updUser4Role(int roleID,int userID) {
+		return roleMapper.updModifyUserRole(roleID, userID);	
 	}
 
 }

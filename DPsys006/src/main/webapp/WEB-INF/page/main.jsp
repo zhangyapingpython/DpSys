@@ -214,8 +214,8 @@
 <body>
 	<div id="div1">
 		<div id="left">
-			欢迎 <font color="#FF0000">${user.username }</font> 访问本系统，你的角色为 <font
-				color="#FF0000">${user.role.name} </font>你的权限包括
+			欢迎 &nbsp;&nbsp;<font color="#FF0000">${user.username }</font>&nbsp;&nbsp; 访问本系统，你的角色为 &nbsp;&nbsp;<font
+				color="#FF0000">${user.role.name} </font>&nbsp;&nbsp;你的权限包括
 
 			<table border="1">
 				<c:forEach items="${user.role.permission }" var="permission">

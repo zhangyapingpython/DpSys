@@ -11,7 +11,7 @@ import hnu.mn.pojo.UserRole;
 public interface UserMapper {
 	//根据用户名密码查找用户
 	User selByUsernamePassword(User user);
-	
+
 	//根据注册信息注册用户
 	int	insUser(User user);
 	
