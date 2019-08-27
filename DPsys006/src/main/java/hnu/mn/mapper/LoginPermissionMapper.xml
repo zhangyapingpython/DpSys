@@ -12,9 +12,9 @@
 
 	<insert id="insLoginUser">
 		insert into login_user
-		(userID,username,queryTime,firstTime,queryNum,dataName)
+		(userID,username,queryTime,firstTime,queryNum,dataName,queryNoise)
 		values(#{userID} , #{username}, #{queryTime}, #{firstTime},
-		#{queryNum}, #{dataName})
+		#{queryNum}, #{dataName}, #{queryNoise})
 	</insert>
 		
 	<!--查询次数减一 -->

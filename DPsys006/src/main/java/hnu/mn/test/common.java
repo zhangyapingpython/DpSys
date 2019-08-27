@@ -2,9 +2,10 @@ package hnu.mn.test;
 
 public class common {
 	public static void main(String[] args) {
-		String a="49.5";
-		long b=60;
-		System.out.println(Float.parseFloat(a));
+		int a=10;
+		double b=100;
+		b=a/10.0;
+		System.out.println(b);
 
 		
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.math3.distribution.LaplaceDistribution;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import hnu.mn.service.ManageService;
 import hnu.mn.service.PermissionService;
 import hnu.mn.service.SearchDataService;
 import hnu.mn.service.UserService;
+import hnu.mn.utils.AddLaplaceNoise;
 
 //控制器
 @Controller
@@ -172,6 +174,7 @@ public class UserController {
 		int userID = user.getUserID();
 		int queryNum = -1;
 		int queryTime = -1;
+		int queryNoise=-1;
 
 		List<Permission> permissions = user.getRole().getPermission();
 		boolean flag = false;
@@ -183,6 +186,7 @@ public class UserController {
 				if (flag) {
 					queryNum = permission.getQueryNum();
 					queryTime = permission.getQueryTime();
+					queryNoise=permission.getQueryNoise();
 				}
 			}
 		}
@@ -238,6 +242,14 @@ public class UserController {
 					//将结果返回给前台
 					//先获取session中的用户信息，进行设置暂未实现
 					
+					
+					//加噪
+					float epsilon=(float) (queryNoise/10.0);
+					double noiseCount = AddLaplaceNoise.laplaceMechanismCount(searchCount, epsilon);
+					double noiseAvg = AddLaplaceNoise.laplaceMechanismCount(searchAvg, epsilon);
+					searchCount=noiseCount;
+					searchAvg=noiseAvg;
+					
 					DataReturnToForm dataReturnToForm=new DataReturnToForm(searchCount, searchAvg, queryNum2, remainMin, remainSecond, dataName);
 					ObjectMapper objectMapper=new ObjectMapper();	
 					objectMapper.writeValueAsString(dataReturnToForm);
@@ -276,9 +288,16 @@ public class UserController {
 				// 如果数据库里没有LoginUser，说明这是第一次访问
 				// 应该讲访问数据存入，且将访问次数减一
 				// 因为这也是一次访问
-				LoginUser loginUserNew = new LoginUser(userID, username, queryTime, timestamp, --queryNum, dataName);
+				LoginUser loginUserNew = new LoginUser(userID, username, queryTime, timestamp, --queryNum, dataName,queryNoise);
 				
 				permissionServiceImpl.insLoginUser(loginUserNew);
+				//加噪
+				float epsilon=(float) (queryNoise/10.0);
+				double noiseCount = AddLaplaceNoise.laplaceMechanismCount(searchCount, epsilon);
+				double noiseAvg = AddLaplaceNoise.laplaceMechanismCount(searchAvg, epsilon);
+				searchCount=noiseCount;
+				searchAvg=noiseAvg;
+				
 				DataReturnToForm dataReturnToForm=new DataReturnToForm(searchCount, searchAvg, queryNum, queryTime, 0, dataName);
 				ObjectMapper objectMapper=new ObjectMapper();	
 				objectMapper.writeValueAsString(dataReturnToForm);

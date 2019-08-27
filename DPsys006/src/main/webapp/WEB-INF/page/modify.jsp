@@ -49,7 +49,7 @@
 	});
 	function show() {
 		var toMod=$("#roleID").val();
-		alert("哈哈哈"+toMod)
+		//alert("哈哈哈"+toMod)
 		window.location.href="modifyPermission?roleID="+toMod
 	}
 

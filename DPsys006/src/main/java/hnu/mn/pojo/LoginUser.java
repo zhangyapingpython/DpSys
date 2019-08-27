@@ -13,48 +13,72 @@ public class LoginUser {
 	Timestamp firstTime;
 	int queryNum;
 	String dataName;
+	int queryNoise;
+
 	@Override
 	public String toString() {
 		return "LoginUser [userID=" + userID + ", username=" + username + ", queryTime=" + queryTime + ", firstTime="
-				+ firstTime + ", queryNum=" + queryNum + ", dataName=" + dataName + "]";
+				+ firstTime + ", queryNum=" + queryNum + ", dataName=" + dataName + ", queryNoise=" + queryNoise + "]";
 	}
+
 	public int getUserID() {
 		return userID;
 	}
+
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public long getQueryTime() {
 		return queryTime;
 	}
+
 	public void setQueryTime(long queryTime) {
 		this.queryTime = queryTime;
 	}
+
 	public Timestamp getFirstTime() {
 		return firstTime;
 	}
+
 	public void setFirstTime(Timestamp firstTime) {
 		this.firstTime = firstTime;
 	}
+
 	public int getQueryNum() {
 		return queryNum;
 	}
+
 	public void setQueryNum(int queryNum) {
 		this.queryNum = queryNum;
 	}
+
 	public String getDataName() {
 		return dataName;
 	}
+
 	public void setDataName(String dataName) {
 		this.dataName = dataName;
 	}
-	public LoginUser(int userID, String username, long queryTime, Timestamp firstTime, int queryNum, String dataName) {
+
+	public int getQueryNoise() {
+		return queryNoise;
+	}
+
+	public void setQueryNoise(int queryNoise) {
+		this.queryNoise = queryNoise;
+	}
+
+	public LoginUser(int userID, String username, long queryTime, Timestamp firstTime, int queryNum, String dataName,
+			int queryNoise) {
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -62,11 +86,12 @@ public class LoginUser {
 		this.firstTime = firstTime;
 		this.queryNum = queryNum;
 		this.dataName = dataName;
+		this.queryNoise = queryNoise;
 	}
+
 	public LoginUser() {
-	
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 }

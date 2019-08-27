@@ -66,7 +66,7 @@
 	});
 	function show(e) {
 		var toMod=$(e).attr("custom")
-		alert("哈哈哈"+$(e).attr("custom"))
+		//alert("哈哈哈"+$(e).attr("custom"))
 		window.location.href="managePermisson?userID="+toMod
 	}
 
@@ -104,16 +104,9 @@
 			</table>
 			
 		</div>
-
-
-		<div id="right2" >
-			<table id="mytable" border="2"></table>
-			 
-			 <input type="button" id="hidden" onclick="hidden()" value="确认修改" />
-		</div>
+		
 	</div>
-	
-	
+		
 </body>
 
 </html>
