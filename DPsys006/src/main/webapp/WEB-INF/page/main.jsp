@@ -9,24 +9,24 @@
 <title>主页面</title>
 <style type="text/css">
 #div1 {
-	width: 800px;
-	height: 300px;
+	width: 1000px;
+	height: 200px;
 	border: 2px;
 	margin: 0px auto;
 	/*设置外边距上下0px，左右auto，即可实现左右居中的效果*/
 }
 
 #left {
-	width: 398px;
-	height: 300px;
+	width: 598px;
+	height: 200px;
 	/*left的高度也是300px，但是却超出了父级元素的高度，为什么？*/
-	border: 1px;
+	border: 20px;
 }
 
 #right {
 	width: 398px;
-	height: 300px;
-	border: 1px;
+	height: 200px;
+	border:solid 1px;
 }
 
 #left, #right {
@@ -181,7 +181,8 @@
 					//相当innerHTML先清空后添加
 					$("#mytable").html(result);
 
-					var result2 = "";
+					var result2 = " ";
+					result2 += "&nbsp;&nbsp;";
 					result2 += "表";
 					result2 += data.dataName;
 					result2 += "剩余查询次数";
@@ -192,8 +193,9 @@
 					result2 += " 分 ";
 					result2 += data.remainSecond;
 					result2 += " 秒 ";
+					result2 += "&nbsp;&nbsp;";
 
-					$("#mytable2").html(result2);
+					$("#mytable2").append(result2);
 				}
 				//alert("成功请求"+data.searchCount+""+data.searchAvg);
 				

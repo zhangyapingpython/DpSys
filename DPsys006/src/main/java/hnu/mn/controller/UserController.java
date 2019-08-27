@@ -70,13 +70,17 @@ public class UserController {
 		//再然后修改它的权限 
 		int userID=(int) session.getAttribute("modifyUserID");
 		System.out.println("要修改cheng角色  "+roleID+"  原来的UserID  "+userID);
-		System.out.println("修改后    "+manageServiceImpl.updUser4Role(roleID, userID));
+		int mod = manageServiceImpl.updUser4Role(roleID, userID);
+		System.out.println("修改后    "+mod);
 		//获取到的所有用户信息，在这里可能有BUG
 		List<User> usersInfo = manageServiceImpl.usersInfo();
 		//System.out.println("获取到的所有用户信息"+userAccount);
 		session.setAttribute("usersInfo", usersInfo);
 		System.out.println("原来的数据"+session.getAttribute("user"));
 		System.out.println("存入的数据usersInfo " + usersInfo);// 
+		//修改完数据后应该要修改LoginInfo中的表，直接删除就行了
+		int del = permissionServiceImpl.delFormerLoginUser(userID);
+		System.out.println("清除了原有的LoginUser   "+del);
 		return "manage";
 	}
 	

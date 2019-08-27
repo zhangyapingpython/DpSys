@@ -12,4 +12,6 @@ public interface PermissionService {
 	int insLoginUser(LoginUser loginUser);
 	
 	int updLoginUserQueryTime(LoginUser loginUser);
+	//清除已经修改角色的记录
+	int delFormerLoginUser(int userID);
 }

@@ -22,4 +22,10 @@
 		UPDATE login_user SET queryNum=#{queryNum} 
 		WHERE userID=#{userID} AND dataName=#{dataName}
 	</update>
+	
+	<!--清除已经修改过角色的用户的记录 -->
+	<delete id="delLoginUser">
+		DELETE FROM login_user WHERE userID=#{userID};
+	</delete>
+	
 </mapper>
