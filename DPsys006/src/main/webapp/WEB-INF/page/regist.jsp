@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>主页面</title>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<title>主页面</title>
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 <script type="text/javascript">
-	String.prototype.trim = function() {/*对string对象当中所指定的方法进行重写操作,replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一
-	个与正则表达式匹配的子串。*/
-		return this.replace(/^\s+/, "").replace(/\s+$/, "");/*\s代表空白字符串，将其替换为空串^为开头$为结尾*/
+	String.prototype.trim = function() {
+		/*去除留白*/
+		return this.replace(/(^\s*)|(\s*$)/g, "");
 	}
 </script>
 <script type="text/javascript">
@@ -18,59 +19,63 @@
 
 	});
 	function checkUserAccount() {
-		var userAccount = $("#userAccount").val();
-		if (!/^\w{4,25}$/.test(userAccount)) {
-			alert("您的用户名必须是数字或字母且在4到25为之间");
-			return;
+		var userAccount = $("#userAccount").val().trim();
+		var regUser = /^[a-zA-Z0-9_-]{4,16}$/
+		if (userAccount == "" || userAccount == null) {
+			alert("账号不能为空！");
+			return false;
+		} else if (!regUser.test(userAccount)) {
+			alert("您的用户名只能包含4到16位（数字、字母、下划线、减号）");
+			return false;
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "checkRegistUserAccount",
+				// data:{"id":val},     // data参数是可选的，有多种写法，也可以直接在url参数拼接参数上去，例如这样：url:"getUser?id="+val,
+				data : {
+					userAccount : userAccount
+				},
+				async : false, // 
+				cache : true, // 表示浏览器是否缓存被请求页面,默认是 true
+				dataType : "json", // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
+				success : function(data) {//回调函数，data是返回的数据
+					$("#errorAccount").html(data.info);
+				},
+				error : function() {
+					//console.log("发生错误")
+					alert("发生错误，请确认你输入的参数是否有误");
+				},
+				complete : function() {
+
+				}
+			});
 		}
-
-		$.ajax({
-			type : "GET",
-			url : "checkRegistUserAccount",
-			// data:{"id":val},     // data参数是可选的，有多种写法，也可以直接在url参数拼接参数上去，例如这样：url:"getUser?id="+val,
-			data : {
-				userAccount : userAccount
-			},
-			async : false, // 同步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
-			cache : true, // 表示浏览器是否缓存被请求页面,默认是 true
-			dataType : "json", // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
-			success : function(data) {//回调函数，data是返回的数据
-				$("#errorAccount").html(data.info);
-			},
-			error : function() {
-				//console.log("发生错误")
-				alert("发生错误，请确认你输入的参数是否有误");
-			},
-			complete : function() {
-
-			}
-		});
 	}
+
 	//表单验证
 	function check() {
-		var userAccount = $("#userAccount").val();
-		var password = $("#password").val();
-		alert("密码"+password)
-		var password2 = $("#password2").val();
-		var username = $("#username").val();
-		var telephone = $("#telephone").val();
-		var email = $("#email").val();
+		var userAccount = $("#userAccount").val().trim();
+		var password = $("#password").val().trim();
+		var password2 = $("#password2").val().trim();
+		var username = $("#username").val().trim();
+		var telephone = $("#telephone").val().trim();
+		var email = $("#email").val().trim();
 		//这个不一样
-		var errorAccount = $("#errorAccount").html();
+		var errorAccount = $("#errorAccount").html().trim();
 		//邮箱验证 test为正则表达式
 		var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
-
+		//用户名验证，只能包含4到16位（数字、字母、下划线、减号）
+		var regUser = /^[a-zA-Z0-9_-]{4,16}$/
 		//alert("error  "+errorAccount);
-		if (userAccount == "" || userAccount == null) {
-			alert("用户名不能为空！");
-			return false;
-		}
+		//密码验证
+		var regPas = /^[a-zA-Z0-9]{4,16}$/
+
 		if (errorAccount == "该账户已被占用") {
 			alert("该账户已被占用,不能注册！");
 			return false;
 		}
-		if (!/^\w{4,25}$/.test(userAccount)) {
-			alert("您的用户名必须是数字或字母且在4到25为之间");
+		if (!regUser.test(userAccount)) {
+			alert("您的用户名只能包含4到16位（数字、字母、下划线、减号）");
 			return false;
 		}
 
@@ -79,8 +84,8 @@
 			return false;
 		}
 
-		if (!/^\w{4,25}$/.test(password)) {
-			alert("您所输入的密码必须是数字或字母且在4到25为之间");
+		if (!regUser.test(password)) {
+			alert("您所输入的密码必须是数字或字母且在4到16为之间");
 			return false;
 		}
 
@@ -98,7 +103,7 @@
 			alert("手机号码有误，请重填");
 			return false;
 		}
-		
+
 		if (email == "" || email == null) {
 			alert("邮箱不能为空！");
 			return false;
@@ -117,31 +122,36 @@
 			<table>
 				<caption>注册的页面</caption>
 				<tr>
-					<td>账号：</td>
-					<td><input type="text" name="userAccount" id="userAccount" placeholder="请输入你的账户，长度不能小于4"
-						onblur="checkUserAccount()" /></td>
+					<td>账户：</td>
+					<td><input type="text" name="userAccount" id="userAccount"
+						placeholder="请输入你的账户" onblur="checkUserAccount()" /></td>
 					<td><span id="errorAccount"></span></td>
 
 				</tr>
 				<tr>
 					<td>密码：</td>
-					<td><input type="password" name="password" id="password" placeholder="请输入你的密码，长度不能小于4"/></td>
+					<td><input type="password" name="password" id="password"
+						placeholder="请输入你的密码" /></td>
 				</tr>
 				<tr>
 					<td>确认密码：</td>
-					<td><input type="password" name="password2" id="password2" placeholder="请确认你的密码，长度不能小于4"/></td>
+					<td><input type="password" name="password2" id="password2"
+						placeholder="请确认你的密码" /></td>
 				</tr>
 				<tr>
 					<td>用户名：</td>
-					<td><input type="text" name="username" id="username" placeholder="请输入你的用户名"/></td>
+					<td><input type="text" name="username" id="username"
+						placeholder="请输入你的用户名" /></td>
 				</tr>
 				<tr>
 					<td>电话号码：</td>
-					<td><input type="text" name="telephone"  id="telephone" placeholder="请输入合法的手机号"/></td>
+					<td><input type="text" name="telephone" id="telephone"
+						placeholder="请输入合法的手机号" /></td>
 				</tr>
 				<tr>
 					<td>邮箱：</td>
-					<td><input type="text" name="email"  id="email" placeholder="请输入合法的邮箱"/></td>
+					<td><input type="text" name="email" id="email"
+						placeholder="请输入合法的邮箱" /></td>
 				</tr>
 				<tr>
 					<td></td>

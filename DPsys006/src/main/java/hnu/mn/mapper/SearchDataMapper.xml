@@ -19,6 +19,16 @@
 		${dataCol} between #{start} and #{end};
 		
 	</select>
+	<!--字段最大值查询 -->
+	<select id="selMaxByFormSearch" resultType="java.lang.String">
+		SELECT max(${dataCol}) from ${dataName}	
+	
+	</select>
+	
+	<!--字段最小值查询 -->
+	<select id="selMinByFormSearch" resultType="java.lang.String">
+		SELECT min(${dataCol}) from ${dataName}	
+	</select>
 		
 	
 </mapper>

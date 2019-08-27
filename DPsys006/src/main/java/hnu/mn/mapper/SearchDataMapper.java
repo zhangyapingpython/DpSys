@@ -7,4 +7,13 @@ public interface SearchDataMapper {
 	String selCountByFormSearch(DataInfo dataInfo);
 
 	String selAvgByFormSearch(DataInfo dataInfo);
+	
+	//可能查询的字段范围不对，所有需要查的最大值和最小值
+	String selMaxByFormSearch(DataInfo dataInfo);
+	
+	String selMinByFormSearch(DataInfo dataInfo);
+	
+	
+	
+	
 }

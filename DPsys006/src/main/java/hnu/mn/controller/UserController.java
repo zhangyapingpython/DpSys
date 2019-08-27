@@ -2,6 +2,7 @@ package hnu.mn.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import hnu.mn.pojo.DataReturnToForm;
 import hnu.mn.pojo.LoginUser;
 import hnu.mn.pojo.Permission;
 import hnu.mn.pojo.User;
+import hnu.mn.service.ManageService;
 import hnu.mn.service.PermissionService;
 import hnu.mn.service.SearchDataService;
 import hnu.mn.service.UserService;
@@ -36,12 +38,17 @@ public class UserController {
 
 	@Resource
 	SearchDataService searchDataServiceImpl;
+	
+	@Resource
+	ManageService manageServiceImpl;
 
 	@RequestMapping("{page}")
 	public String main(@PathVariable String page) {
 		System.out.println("restful");
 		return page;
 	}
+	
+
 	
 	//登录
 	@SuppressWarnings("unused")
@@ -58,14 +65,24 @@ public class UserController {
 		getFormUser.setPassword(password);
 		//System.out.println("login来的  "+getFormUser);
 		User user = userServiceImpl.login(getFormUser);
-		if (user.getRole().getName()=="管理员") {
-			return "manage";
-		}
-		
+	
 		if (user != null) {
+			if (user.getRole().getName().equals("管理员")) {
+				//再跳转前应该查找到所有用户的信息
+				List<User> users=new ArrayList<User>();
+				session.setAttribute("user", user);
+				//获取到的所有用户信息，在这里可能有BUG
+				List<User> usersInfo = manageServiceImpl.usersInfo();
+				//System.out.println("获取到的所有用户信息"+userAccount);
+				session.setAttribute("usersInfo", usersInfo);
+				System.out.println("原来的数据"+session.getAttribute("user"));
+				System.out.println("存入的数据usersInfo " + usersInfo);// 
+				return "manage";
+			}
+			
 			// 说明有这个用户 接下来要存储信息好取，登陆成功
 			session.setAttribute("user", user);
-			//System.out.println("存入的数据user " + user);// 这是转发
+			//这是转发
 			return "main";
 		} else {
 			// 这是重定向
@@ -78,7 +95,7 @@ public class UserController {
 	@RequestMapping("regist")
 	public String regist(User user, HttpSession session) {
 		// 直接访问 80：login
-		System.out.println("进入regist");
+		//System.out.println("进入regist");
 		return "regist";
 	}
 
@@ -86,16 +103,16 @@ public class UserController {
 	@RequestMapping("regist2")
 	public String regist2(User user,HttpServletResponse resp, HttpSession session) {
 		userServiceImpl.insUser(user);
-		System.out.println("进入regist2"+user);
+		//System.out.println("进入regist2"+user);
 		return "redirect:/login.jsp";
 	}
 	
 	@RequestMapping("checkRegistUserAccount")
 	@ResponseBody
 	public DataReturnToForm checkRegistUserAccount(String userAccount, HttpSession session) {
-		System.out.println("进入checkRegistUserAccount"+userAccount);
+		//System.out.println("进入checkRegistUserAccount"+userAccount);
 		boolean checkUserAccount = userServiceImpl.checkUserAccount(userAccount);
-		System.out.println("进入regist2"+checkUserAccount);
+		//System.out.println("进入regist2"+checkUserAccount);
 		DataReturnToForm dataReturnToForm=new DataReturnToForm();
 		if (checkUserAccount) {	
 			dataReturnToForm.setInfo("该账户可以注册");		
@@ -109,6 +126,7 @@ public class UserController {
 	@ResponseBody
 	public DataReturnToForm ajax(DataInfo dataInfo, HttpServletRequest req, HttpServletResponse resp, HttpSession session)
 			throws IOException {	
+		//System.out.println("进入ajax");
 		String dataName = dataInfo.getDataName();
 		String dataCol = dataInfo.getDataCol();
 		//int start = dataInfo.getStart();
@@ -134,7 +152,7 @@ public class UserController {
 		}
 		// flag为真，说明有权限
 		if (flag) {
-			//System.out.println("此次查询有效");
+			//System.out.println("有权限flag");
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			String username = user.getUsername();
 
@@ -160,8 +178,9 @@ public class UserController {
 					} catch (Exception e) {
 						//System.out.println("错误了");
 						e.printStackTrace();
-						
-						String error="查询范围有错误";
+						String serachMax = searchDataServiceImpl.serachDataMaxService(dataInfo);
+						String serachMin = searchDataServiceImpl.serachDataMinService(dataInfo);
+						String error="查询范围有错误应该在  "+serachMin +" 和  " +serachMax +" 之间";
 						DataReturnToForm dataReturnToForm=new DataReturnToForm(error);
 						ObjectMapper objectMapper=new ObjectMapper();	
 						objectMapper.writeValueAsString(dataReturnToForm);
@@ -181,9 +200,12 @@ public class UserController {
 					loginUser.setQueryNum(queryNum2);
 					permissionServiceImpl.updLoginUserQueryTime(loginUser);
 					//将结果返回给前台
+					//先获取session中的用户信息，进行设置暂未实现
+					
 					DataReturnToForm dataReturnToForm=new DataReturnToForm(searchCount, searchAvg, queryNum2, remainMin, remainSecond, dataName);
 					ObjectMapper objectMapper=new ObjectMapper();	
 					objectMapper.writeValueAsString(dataReturnToForm);
+					//System.out.println("合理后 dataReturnToFORM  "+dataReturnToForm);
 					return dataReturnToForm;
 				
 				} else {
@@ -194,6 +216,7 @@ public class UserController {
 					DataReturnToForm dataReturnToForm=new DataReturnToForm(error);
 					ObjectMapper objectMapper=new ObjectMapper();	
 					objectMapper.writeValueAsString(dataReturnToForm);
+					//System.out.println("查询次数超过或查询时间超过 dataReturnToFORM  "+dataReturnToForm);
 					return dataReturnToForm;
 				}
 			} else {
@@ -223,17 +246,20 @@ public class UserController {
 				DataReturnToForm dataReturnToForm=new DataReturnToForm(searchCount, searchAvg, queryNum, queryTime, 0, dataName);
 				ObjectMapper objectMapper=new ObjectMapper();	
 				objectMapper.writeValueAsString(dataReturnToForm);
+				//System.out.println("第一次   "+dataReturnToForm);
 				return dataReturnToForm;
 			}
 
 		} else {
+			
 			String error="你没有权限访问此字段，请检查自己的权限";
 			DataReturnToForm dataReturnToForm=new DataReturnToForm(error);
 			//因为查询的不满足
-			System.out.println("无权限");
+			//System.out.println("无权限");
 			//return "NoPermission";
 			ObjectMapper objectMapper=new ObjectMapper();	
 			objectMapper.writeValueAsString(dataReturnToForm);
+			//System.out.println("无权限flag 错"+dataReturnToForm);
 			return dataReturnToForm;
 		}
 

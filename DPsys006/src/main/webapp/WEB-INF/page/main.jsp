@@ -60,6 +60,12 @@
 </style>
 <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 <script type="text/javascript">
+	String.prototype.trim = function() {
+		/*去除留白*/
+		return this.replace(/(^\s*)|(\s*$)/g, "");
+	}
+</script>
+<script type="text/javascript">
 	$(document).ready(function() {
 
 	});
@@ -109,11 +115,11 @@
 	}
 
 	function method() {
-		var dataName = $("#dataName").val();
-		var dataCol = $("#dataCol").val();
-		var start = $("#start").val();
-		var end = $("#end").val();
-
+		var dataName = $("#dataName").val().trim();
+		var dataCol = $("#dataCol").val().trim();
+		var start = $("#start").val().trim();
+		var end = $("#end").val().trim();
+		
 		if (dataName == "" || dataName == null) {
 			alert("数据表不能为空！");
 			return false;
@@ -147,6 +153,8 @@
 			success : function(data) {
 				if (data.error != null) {
 					alert(data.error)
+				}else if (data.info != null) {
+					alert(data.info)
 				}else{
 					var result = "";
 					result += "<caption>";

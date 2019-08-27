@@ -25,4 +25,17 @@ public class SearchDataServiceImpl implements SearchDataService {
 		return searchDataMapper.selAvgByFormSearch(dataInfo);
 	}
 
+	//分别查最大值和最小值
+	@Override
+	public String serachDataMaxService(DataInfo dataInfo) {
+		// TODO Auto-generated method stub
+		return searchDataMapper.selMaxByFormSearch(dataInfo);
+	}
+
+	@Override
+	public String serachDataMinService(DataInfo dataInfo) {
+		// TODO Auto-generated method stub
+		return searchDataMapper.selMinByFormSearch(dataInfo);
+	}
+
 }
