@@ -26,7 +26,7 @@
 #right {
 	width: 398px;
 	height: 200px;
-	border:solid 1px;
+	border: solid 1px;
 }
 
 #left, #right {
@@ -211,13 +211,45 @@
 		// alert("测试异步")
 	}
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
 
+	});
+
+	function query() {
+		var sql = $("#sqlQuery").val();
+		//alert("sqlString  ！"+sqlString);
+
+		$.ajax({
+			type : "GET",
+			url : "sqlQuery",
+			data : {
+				sql : sql
+
+			},
+			async : true, // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
+			cache : true, // 表示浏览器是否缓存被请求页面,默认是 true
+			dataType : "json", // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
+			success : function(data) {
+				if (data.statu != 200) {
+					alert(data.info)
+				} 
+
+			},
+			error : function() {
+				alert("发生错误，请确认你输入的参数是否有误");
+			},
+		
+		});
+	}
+</script>
 </head>
 <body>
 	<div id="div1">
 		<div id="left">
-			欢迎 &nbsp;&nbsp;<font color="#FF0000">${user.username }</font>&nbsp;&nbsp; 访问本系统，你的角色为 &nbsp;&nbsp;<font
-				color="#FF0000">${user.role.name} </font>&nbsp;&nbsp;你的权限包括
+			欢迎 &nbsp;&nbsp;<font color="#FF0000">${user.username }</font>&nbsp;&nbsp;
+			访问本系统，你的角色为 &nbsp;&nbsp;<font color="#FF0000">${user.role.name}
+			</font>&nbsp;&nbsp;你的权限包括
 
 			<table border="1">
 				<c:forEach items="${user.role.permission }" var="permission">
@@ -261,6 +293,8 @@
 					<td><input type="text" name="end" id="end" onblur="checkEnd()"></td>
 					<td><span id="messageEnd"></span></td>
 				</tr>
+
+
 			</table>
 			<button onclick="method();">查询</button>
 		</div>
@@ -269,7 +303,13 @@
 			<table id="mytable" border="2"></table>
 		</div>
 	</div>
-
+	<table>
+		<tr>
+			<td>请输入查询语句:</td>
+			<td><input type="text" name="sqlQuery" id="sqlQuery"></td>
+		</tr>
+	</table>
+	<button onclick="query();">查询</button>
 </body>
 
 </html>

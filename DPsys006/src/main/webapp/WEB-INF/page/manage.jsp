@@ -57,7 +57,6 @@
 #left2, #right2 {
 	float: left;
 }
-
 </style>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript">
@@ -70,7 +69,7 @@
 		window.location.href="managePermisson?userID="+toMod
 	}
 
-</script>	
+</script>
 </head>
 <body>
 	<div id="div1">
@@ -84,7 +83,7 @@
 					<th>角色</th>
 					<th>权限</th>
 					<th>操作</th>
-					
+
 				</tr>
 
 				<c:forEach items="${usersInfo }" var="user">
@@ -98,15 +97,16 @@
 								<dd>可查询时间：&nbsp;&nbsp; ${permission.queryTime }分钟</dd>
 								<dd>可查询次数：&nbsp;&nbsp; ${permission.queryNum }次</dd>
 							</c:forEach></td>
-						<td><button id="${user.userAccount}" custom="${user.userID}" onclick="show(this);">修改</button></td>
+						<td><button id="${user.userAccount}" custom="${user.userID}"
+								onclick="show(this);">修改</button></td>
 					</tr>
 				</c:forEach>
 			</table>
-			
+
 		</div>
-		
+
 	</div>
-		
+
 </body>
 
 </html>

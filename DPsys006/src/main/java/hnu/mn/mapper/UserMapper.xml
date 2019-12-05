@@ -24,6 +24,6 @@
 	
 	<!--管理员根据用户ID查找用户  -->
 	<select id="selByUserID" resultType="hnu.mn.pojo.User">
-		select * from sys_user where userID=#{userID};
+		select * from sys_user where userID=${userID};
 	</select>
 </mapper>
