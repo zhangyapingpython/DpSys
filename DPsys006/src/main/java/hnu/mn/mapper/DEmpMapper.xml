@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hnu.mn.mapper.DEmpMapper">
+	<resultMap id="BaseResultMap" type="hnu.mn.pojo.DEmp">
+		<id column="empID" property="empid" jdbcType="INTEGER" />
+		<result column="empName" property="empname" jdbcType="VARCHAR" />
+		<result column="empAge" property="empage" jdbcType="INTEGER" />
+		<result column="empMoney" property="empmoney" jdbcType="DOUBLE" />
+		<result column="empWeight" property="empweight"
+			jdbcType="DOUBLE" />
+	</resultMap>
+	
+	<!--根据SQL查询 -->
+	<select id="selectAll" resultType="hnu.mn.pojo.DEmp">
+		${sql};
+	</select>
+	
+	<!--根据SQL查询计数 -->
+	<select id="selectCount" resultType="int">
+		${sql};
+	</select>
+	
+	<!--根据SQL查询平均值 -->
+	<select id="selectAvg" resultType="double">
+		${sql};
+	</select>
+	
+	<!--根据SQL查询总值 -->
+	<select id="selectSum" resultType="double">
+		${sql};
+	</select>
+	
+	<!--根据SQL查询最大值 -->
+	<select id="selectMax" resultType="double">
+		${sql};
+	</select>
+	
+	<!--根据SQL查询最小值 -->
+	<select id="selectMin" resultType="double">
+		${sql};
+	</select>
+	
+	
+	<!--根据SQL dataCol查询最大值 -->
+	<select id="selectDataColMax" resultType="double">
+		select max(#{dataCol}) from d_emp
+	</select>
+
+
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		empID, empName, empAge, empMoney, empWeight
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="hnu.mn.pojo.DEmpExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from d_emp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from d_emp
+		where empID = #{empid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from d_emp
+		where empID = #{empid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="hnu.mn.pojo.DEmpExample">
+		delete from d_emp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="hnu.mn.pojo.DEmp">
+		insert into d_emp (empID, empName, empAge,
+		empMoney, empWeight)
+		values (#{empid,jdbcType=INTEGER}, #{empname,jdbcType=VARCHAR},
+		#{empage,jdbcType=INTEGER},
+		#{empmoney,jdbcType=DOUBLE}, #{empweight,jdbcType=DOUBLE})
+	</insert>
+	<insert id="insertSelective" parameterType="hnu.mn.pojo.DEmp">
+		insert into d_emp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="empid != null">
+				empID,
+			</if>
+			<if test="empname != null">
+				empName,
+			</if>
+			<if test="empage != null">
+				empAge,
+			</if>
+			<if test="empmoney != null">
+				empMoney,
+			</if>
+			<if test="empweight != null">
+				empWeight,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="empid != null">
+				#{empid,jdbcType=INTEGER},
+			</if>
+			<if test="empname != null">
+				#{empname,jdbcType=VARCHAR},
+			</if>
+			<if test="empage != null">
+				#{empage,jdbcType=INTEGER},
+			</if>
+			<if test="empmoney != null">
+				#{empmoney,jdbcType=DOUBLE},
+			</if>
+			<if test="empweight != null">
+				#{empweight,jdbcType=DOUBLE},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="hnu.mn.pojo.DEmpExample" resultType="java.lang.Integer">
+		select count(*) from d_emp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update d_emp
+		<set>
+			<if test="record.empid != null">
+				empID = #{record.empid,jdbcType=INTEGER},
+			</if>
+			<if test="record.empname != null">
+				empName = #{record.empname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.empage != null">
+				empAge = #{record.empage,jdbcType=INTEGER},
+			</if>
+			<if test="record.empmoney != null">
+				empMoney = #{record.empmoney,jdbcType=DOUBLE},
+			</if>
+			<if test="record.empweight != null">
+				empWeight = #{record.empweight,jdbcType=DOUBLE},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update d_emp
+		set empID = #{record.empid,jdbcType=INTEGER},
+		empName = #{record.empname,jdbcType=VARCHAR},
+		empAge = #{record.empage,jdbcType=INTEGER},
+		empMoney = #{record.empmoney,jdbcType=DOUBLE},
+		empWeight = #{record.empweight,jdbcType=DOUBLE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="hnu.mn.pojo.DEmp">
+		update d_emp
+		<set>
+			<if test="empname != null">
+				empName = #{empname,jdbcType=VARCHAR},
+			</if>
+			<if test="empage != null">
+				empAge = #{empage,jdbcType=INTEGER},
+			</if>
+			<if test="empmoney != null">
+				empMoney = #{empmoney,jdbcType=DOUBLE},
+			</if>
+			<if test="empweight != null">
+				empWeight = #{empweight,jdbcType=DOUBLE},
+			</if>
+		</set>
+		where empID = #{empid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="hnu.mn.pojo.DEmp">
+		update d_emp
+		set empName = #{empname,jdbcType=VARCHAR},
+		empAge = #{empage,jdbcType=INTEGER},
+		empMoney = #{empmoney,jdbcType=DOUBLE},
+		empWeight = #{empweight,jdbcType=DOUBLE}
+		where empID = #{empid,jdbcType=INTEGER}
+	</update>
+</mapper>
